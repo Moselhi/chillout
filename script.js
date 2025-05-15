@@ -1,64 +1,49 @@
 function calculate() {
   const fuels = [
-    { name: "Fuel 80", litersId: "liters80", amountId: "amount80" },
-    { name: "Fuel 92", litersId: "liters92", amountId: "amount92" },
-    { name: "Fuel 95", litersId: "liters95", amountId: "amount95" },
-    { name: "Diesel", litersId: "litersDiesel", amountId: "amountDiesel" },
+    { name: "80", price: 15.75 },
+    { name: "92", price: 17.75 },
+    { name: "95", price: 19 },
+    { name: "Solar", price: 15.5 }
   ];
 
-  let resultHTML = "<h2>Results</h2>";
-  let hasInput = false;
-
-  let totalLiters = 0;
+  let totalMoney = 0;
   let totalTips = 0;
-  let totalAmount = 0;
+  let totalLiters = 0;
 
   fuels.forEach(fuel => {
-    const liters = parseFloat(document.getElementById(fuel.litersId).value);
-    const amount = parseFloat(document.getElementById(fuel.amountId).value);
+  const start = parseFloat(document.getElementById(`start${fuel.name}`).value) || 0;
+  const end = parseFloat(document.getElementById(`end${fuel.name}`).value) || 0;
+  const money = parseFloat(document.getElementById(`money${fuel.name}`).value) || 0;
 
-    if (!isNaN(liters) && !isNaN(amount)) {
-      const pricePerLiter = getFixedPrice(fuel.name);
-      const expectedTotal = liters * pricePerLiter;
-      const tips = amount - expectedTotal;
-      const tipsPer1000 = (liters > 0) ? (tips / liters * 1000).toFixed(2) : "0.00";
+  const outputDiv = document.getElementById(`output${fuel.name}`);
 
-      resultHTML += `
-        <h3>${fuel.name}</h3>
-        <p>Tips: ${tips.toFixed(2)} EGP</p>
-        <p>Tips per 1000L: ${tipsPer1000} EGP</p>
-      `;
-
-      hasInput = true;
-      totalLiters += liters;
-      totalTips += tips;
-      totalAmount += amount;
-    }
-  });
-
-  if (hasInput) {
-    const totalTipsPer1000 = (totalLiters > 0) ? (totalTips / totalLiters * 1000).toFixed(2) : "0.00";
-
-    resultHTML += `
-      <hr>
-      <h3>Total Summary</h3>
-      <p><strong>Total Tips:</strong> ${totalTips.toFixed(2)} EGP</p>
-      <p><strong>Total Amount:</strong> ${totalAmount.toFixed(2)} EGP</p>
-      <p><strong>Total Tips per 1000L:</strong> ${totalTipsPer1000} EGP</p>
-    `;
-  } else {
-    resultHTML += "<p>Please enter at least one fuel type.</p>";
+  if (start > end) {
+    outputDiv.innerHTML = `<span style="color:red;">Start can't be greater than End!</span>`;
+    return; // نخرج من الحساب لهذا النوع
   }
 
-  document.getElementById("results").innerHTML = resultHTML;
-}
+  const liters = end - start;
+  const expected = liters * fuel.price;
+  const tip = money - expected;
+  const tipPer1000 = liters > 0 ? (tip / liters) * 1000 : 0;
 
-function getFixedPrice(fuelType) {
-  switch (fuelType) {
-    case "Fuel 80": return 15.75;
-    case "Fuel 92": return 17.75;
-    case "Fuel 95": return 19;
-    case "Diesel": return 15.5;
-    default: return 0;
-  }
+  // Save totals
+  totalMoney += money;
+  totalTips += tip;
+  totalLiters += liters;
+
+  // Output
+  outputDiv.innerHTML = `
+    Liters: ${liters.toFixed(2)}<br>
+    Tip: ${tip.toFixed(2)}<br>
+    Tip per 1000L: ${tipPer1000.toFixed(2)}
+  `;
+});
+
+
+  const totalTipPer1000 = totalLiters > 0 ? (totalTips / totalLiters) * 1000 : 0;
+
+  document.getElementById("totalMoney").innerText = `Total Money: ${totalMoney.toFixed(2)}`;
+  document.getElementById("totalTips").innerText = `Total Tip: ${totalTips.toFixed(2)}`;
+  document.getElementById("tipsPer1000L").innerText = `Overall Tip per 1000L: ${totalTipPer1000.toFixed(2)}`;
 }

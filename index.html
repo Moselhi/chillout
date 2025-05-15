@@ -1,45 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Station Shift Closure</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Fuel Shift Calculator</title>
 </head>
 <body>
-  <div class="container">
-    <h1>Banha Shobra 3 Chillout Station</h1>
 
-    <div class="fuel-type">
-      <h2>Fuel 80</h2>
-      <label>Liters: <input type="number" id="liters80" /></label>
-      <label>Total Amount (EGP): <input type="number" id="amount80" /></label>
-    </div>
+  <h1>Fuel Shift Calculator</h1>
 
-    <div class="fuel-type">
-      <h2>Fuel 92</h2>
-      <label>Liters: <input type="number" id="liters92" /></label>
-      <label>Total Amount (EGP): <input type="number" id="amount92" /></label>
-    </div>
-
-    <div class="fuel-type">
-      <h2>Fuel 95</h2>
-      <label>Liters: <input type="number" id="liters95" /></label>
-      <label>Total Amount (EGP): <input type="number" id="amount95" /></label>
-    </div>
-
-    <div class="fuel-type">
-      <h2>Diesel</h2>
-      <label>Liters: <input type="number" id="litersDiesel" /></label>
-      <label>Total Amount (EGP): <input type="number" id="amountDiesel" /></label>
-    </div>
-
-    <button onclick="calculate()">Calculate</button>
-
-    <div id="results"></div>
-    <h4>This website made by Mohamed Moselhi</h4>
+  <div class="fuel-type" id="fuel80">
+    <h2>Fuel 80</h2>
+    <label>Start Reading: <input type="number" id="start80"></label><br>
+    <label>End Reading: <input type="number" id="end80"></label><br>
+    <label>Total Money: <input type="number" id="money80"></label><br>
+    <div id="output80"></div>
   </div>
 
+  <div class="fuel-type" id="fuel92">
+    <h2>Fuel 92</h2>
+    <label>Start Reading: <input type="number" id="start92"></label><br>
+    <label>End Reading: <input type="number" id="end92"></label><br>
+    <label>Total Money: <input type="number" id="money92"></label><br>
+    <div id="output92"></div>
+  </div>
+
+  <div class="fuel-type" id="fuel95">
+    <h2>Fuel 95</h2>
+    <label>Start Reading: <input type="number" id="start95"></label><br>
+    <label>End Reading: <input type="number" id="end95"></label><br>
+    <label>Total Money: <input type="number" id="money95"></label><br>
+    <div id="output95"></div>
+  </div>
+
+  <div class="fuel-type" id="fuelSolar">
+    <h2>Solar</h2>
+    <label>Start Reading: <input type="number" id="startSolar"></label><br>
+    <label>End Reading: <input type="number" id="endSolar"></label><br>
+    <label>Total Money: <input type="number" id="moneySolar"></label><br>
+    <div id="outputSolar"></div>
+  </div>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <div id="summary">
+    <h2>Summary:</h2>
+    <div id="totalMoney"></div>
+    <div id="totalTips"></div>
+    <div id="tipsPer1000L"></div>
+  </div>
+  <h4>This Website Made By Mohamed Moselhi</h4>
   <script src="script.js"></script>
+
 </body>
 </html>
